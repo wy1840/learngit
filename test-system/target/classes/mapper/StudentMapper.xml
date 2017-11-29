@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.zaw.tsys.student.dao.StudentDAO">
+
+
+	<select id="findNameStudent" resultType="cn.zaw.tsys.student.entity.Student">
+		select * from tb_student
+		where studentName=#{StudentName}
+	</select>
+	<!-- 按班级 -->
+	<select id="findClassStudent" resultType="cn.zaw.tsys.student.entity.Student">
+		select * from tb_student
+		<where>
+			<if test="sclass!=null">
+				 sclass=#{sclass}
+			</if>
+		</where>
+		limit #{startIndex},#{pageSize}
+	</select>
+	<!-- 按ID -->
+	<select id="findStudentById" resultType="cn.zaw.tsys.student.entity.Student">
+		select * from tb_student
+		where studentID=#{studentID}
+	</select>
+	
+	<select id="getRowCount" resultType="int">
+		select count(*) from tb_student
+		<where>
+			<if test="sclass!=null">
+				 sclass=#{sclass}
+			</if>
+		</where>
+	</select>
+	<!-- 修改成绩 -->
+	<update id="updateResult">
+		update tb_student
+		set result=#{result}
+		where studentID=#{studentID}
+	</update>
+
+</mapper>
+
+
+

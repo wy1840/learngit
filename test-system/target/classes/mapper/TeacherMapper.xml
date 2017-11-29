@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.zaw.tsys.teacher.dao.TeacherDAO">
+	<select id="findById" parameterType="string" resultType="cn.zaw.tsys.teacher.entity.Teacher">
+		select * from tb_teacher where teacherID=#{teacherID}
+	</select>
+</mapper>

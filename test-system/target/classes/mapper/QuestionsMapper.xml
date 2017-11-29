@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.zaw.tsys.questions.dao.QuestionsDao">
+	<select id="findObjectById" resultType="questions">
+		select * from tb_subject
+		where subjectId=#{id}
+	</select>
+	<!-- 插入语句 -->
+	<insert id="addQuestions">
+		INSERT INTO tb_subject VALUES( 
+		#{subjectID},
+		#{subjectTitle},
+		#{subjectOptionA},
+		#{subjectOptionB},
+		#{subjectOptionC},
+		#{subjectOptionD},
+		#{subjectAnswer},
+		#{subjectParse} 
+		)
+	</insert>
+	<!-- 修改语句 -->
+	<update id="updateQuestions">
+		update tb_subject set 
+		subjectTitle=#{subjectTitle},
+		subjectOptionA=#{subjectOptionA},
+		subjectOptionB=#{subjectOptionB},
+		subjectOptionC=#{subjectOptionC},
+		subjectOptionD=#{subjectOptionD},
+		subjectAnswer=#{subjectAnswer},
+		subjectParse=#{subjectParse} 
+		where subjectID=#{subjectID}
+	</update>
+	
+	<!-- 删除试题 -->
+	<delete id="deleteQuestions">
+		delete from tb_subject where subjectID=#{subjectID}
+	</delete>
+	<!-- 将sql语句共有的部分提取出来 -->
+	<!-- 借助sql元素定义一个动态sql，其他位置需要时
+	直接借助include元素进行包含 -->
+	<sql id="queryWhereId">
+		<where>
+			<if test="subjectTitle!=null and subjectTitle!=''">
+				subjectTitle like concat("%",#{subjectTitle},"%")
+			</if>
+		</where>
+	</sql>
+	<!-- 查询全部试题 -->
+	<select id="findQuestions" resultType="questions">
+		select * from tb_subject
+		<include refid="queryWhereId"></include>
+		limit #{startIndex},#{pageSize}
+	</select>
+	
+	<!-- 总记录数量 
+		resultType后的int是否可以修改为integer,
+		这个integer是否可以大写
+	-->
+	<select id="getRowCount" resultType="int">
+		select count(*) from tb_subject
+		<include refid="queryWhereId"></include>
+	</select>
+	
+	<select id="findRandomQuestions" resultType="questions">
+		select * from tb_subject order by rand() limit 20
+	</select>
+</mapper>
