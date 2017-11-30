@@ -9,3 +9,4 @@ Creating a new branch is quick 2 and simple.
 Creating a new branch is quick 2 and simple.
 >>>>>>> featurel
 new branch dev change
+defconstant
